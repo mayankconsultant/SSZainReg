@@ -76,13 +76,13 @@ class CUSTOMER(models.Model):
     class ID_TYPES(models.TextChoices):
         WORK_ID = ("1", "Work ID")
         STUDENT_ID = ("2", "Student ID")
-        UN_ID=(3,'UN ID'),
-        POLICE_MILITARY_ID=(4,'Military,Polica,SPLM'),
-        TRIBAL_ID=(5,'Tribal Chiefs Cert.'),
-        NATIONAL_ID=(6,'National ID'),
-        PASSPORT=(7,'Passport'),
-        VOTING_ID=(8,'Voting Card'),
-        DRIVING_LICENCE_ID=(9,'Driving License')
+        UN_ID=("3",'UN ID'),
+        POLICE_MILITARY_ID=("4",'Military,Polica,SPLM'),
+        TRIBAL_ID=("5",'Tribal Chiefs Cert.'),
+        NATIONAL_ID=("6",'National ID'),
+        PASSPORT=("7",'Passport'),
+        VOTING_ID=("8",'Voting Card'),
+        DRIVING_LICENCE_ID=("9",'Driving License')
 
     """Model definition for CUSTOMER."""
 
