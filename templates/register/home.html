@@ -3,17 +3,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container">
-<div class="row my-3 text-center">
-<h1 class="mx-auto">Zain Thanks you to visit Registration System </h1>
+<div class="container-fluid ">
+<div class="row my-3 text-center bg-info">
+<h1 class="mx-auto ">Zain Thanks you to visit Registration System </h1>
 </div>    
-<div class="row mt-2">
+<div class="row ml-2 mt-2 bg-warning">
   
 <form method="post"> 
   {% csrf_token %} 
-  {{ form | crispy }}
+<!--  {{ form | crispy }}-->
 
-  <input type="submit" value="Save"> 
+<!--  <input type="submit" value="Save"> -->
+
+  {% crispy form %}
+
 </form> 
 
 </div>

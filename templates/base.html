@@ -18,15 +18,22 @@
         
 </head>
 <body>
-  
+
+
+
   {% block upjava %}
-  {% include  'app_js.html'%}  
+  {% include  'app_js.html'%}
+
   {% endblock upjava %}
-  
+
+  <script>
+  //$enable-gradients(true);
+  </script>
+
   {% if messages %}
 <div class="alert alert-success">
     {% for m in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</li>
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</li>
     {% endfor %}
 </div>
 {% endif %}

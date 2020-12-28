@@ -2,7 +2,7 @@ $('#userDetailTable').DataTable({
 
 'deferRender': false,
 
-data:window.aj_data,
+data:window.data,
 responsive:true,
 dom:'Bfrtip',
 lengthMenu:[
