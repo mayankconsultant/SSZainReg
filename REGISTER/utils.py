@@ -1,6 +1,5 @@
-from twilio.rest import Client
 
-from django.conf import settings
+import requests
 
 def gen_otp(len):
     import math , random
@@ -12,35 +11,22 @@ def gen_otp(len):
     for i in range(len):
         OTP += digits[math.floor(random.random() * 10  )]
 
+
     return OTP
 
-def send_sms(msisdn):
+def send_message(msisdn):
     otp = gen_otp(6)
-    print(otp)
-    account_sid = settings.ACCOUNT_SID
-    auth_token = settings.ACCOUNT_TOKEN
-    client = Client(account_sid, auth_token)
-
-    message = client.messages \
-        .create(
-        body="To register USE OTP as " + str (otp) ,
-        from_='+12015968801', #settings.FROM_PHONE,
-        to='+917718035086' # + str(msisdn)
-    )
-
-    print(message.sid)
+    print (str(msisdn)[3:])
+    print('OTP:' + str(otp))
+    Api = 'http://173.212.218.174:6005/api/v2/SendSMS?SenderId=ZainSS&Is_Unicode=false&Is_Flash=false'
+    message = 'To register USE OTP as '  + str(otp)
+    Api = Api + '&Message=' + str(message)
+    Api = Api + '&MobileNumbers=' + str(msisdn)[3:]
+    Api = Api + '&ApiKey=TqEuq9o58233RcYkFIm5w1CS2HB7yJHejc0a3tbMpfg%3D&ClientId=94393ba7-afef-4744-880b-175368936e9b'
 
 
-    # account_sid = 'AC0bc30ff886a6f08d90527c18adea426a'
-    # auth_token = 'c6f7cbb0ca6904aea996be3162223bc1'
-    # client = Client(account_sid, auth_token)
-    #
-    # message = client.messages.create(
-    #     from_='whatsapp:+14155238886',
-    #     body='Hello! Your OTP for Registration is ' + str(otp),
-    #     to='whatsapp:+917718035086'
-    # )
-    #
-    # print(message.sid)
-
+    r = requests.get(url=Api)
+    # print(Api)
+    print (r.status_code)
     return otp
+

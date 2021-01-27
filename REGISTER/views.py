@@ -10,18 +10,13 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
 from django.views.generic import ListView, CreateView , FormView, View
-from .models import CUSTOMER , Locations, payam, county,states
+from .models import CUSTOMER ,  payam, county,states
 
 from .forms import MSISDNForm , OTPFORM , CustomerForm
 
-from .utils import gen_otp , send_sms
+from .utils import  send_message
 
-class home(SuccessMessageMixin, CreateView):
-    model = CUSTOMER
-    form_class = CustomerForm
-    template_name = "home.html"
-    success_url = reverse_lazy("home")
-    success_message = "Thank You Your Data will be verified and shall confirm you in 2 working days!!!!"
+
 
 
 class list(ListView):
@@ -35,15 +30,8 @@ class list(ListView):
     #     context = super(list, self).get_context_data(**kwargs)
     #     return context
 
-class RegisterView(FormView):
-    form_class = MSISDNForm
-    success_url = reverse_lazy("verify-otp")
-    template_name = 'register/register.html'
 
-class Verify_OTP(FormView):
-    form_class = OTPFORM
-    success_url = reverse_lazy("home")
-    template_name = 'register/verify_otp.html'
+
 
 
 class AllInOne(SuccessMessageMixin, CreateView):
@@ -84,41 +72,41 @@ class AllInOne(SuccessMessageMixin, CreateView):
 
 
 
-def allforms(request):
-
-    if request.method == 'POST':
-        form=MSISDNForm(request.POST)
-        if form.is_valid():
-            msisdn = request.POST.get('msisdn')
-            form = OTPFORM(initial={'msisdn':msisdn})
-            # form.fields['msisdn']
-            return render(request, 'register/allinone.html', {'form': form})
-        else :
-            messages.ERROR(request,'FORM is INVALID')
-
-        if 'msisdn' not in request.session:
-                if form.is_valid() :
-                    otp = form.cleaned_data['otp']
-                    request.session['msisdn']= form.cleaned_data['msisdn']
-                    print('YES')
-                    form= CustomerForm
-                    return render(request, 'register/allinone.html', {'form': form})
-        else :
-                print("Hello")
-                print(request.POST.get('msisdn'))
-                print(request.session.get('msisdn',1))
-                msisdn = request.session.get('msisdn')
-                form = CustomerForm(request.POST)
-                form.fields
-                if form.is_valid() :
-                    print('YAHOO')
-
-                    del request.session['msisdn']
-                    form.save()
-                return render(request, 'register/allinone.html',{'form': form})
-
-    form =MSISDNForm
-    return render(request, 'register/allinone.html', {'form': form})
+# def allforms(request):
+#
+#     if request.method == 'POST':
+#         form=MSISDNForm(request.POST)
+#         if form.is_valid():
+#             msisdn = request.POST.get('msisdn')
+#             form = OTPFORM(initial={'msisdn':msisdn})
+#             # form.fields['msisdn']
+#             return render(request, 'register/allinone.html', {'form': form})
+#         else :
+#             messages.ERROR(request,'FORM is INVALID')
+#
+#         if 'msisdn' not in request.session:
+#                 if form.is_valid() :
+#                     otp = form.cleaned_data['otp']
+#                     request.session['msisdn']= form.cleaned_data['msisdn']
+#                     print('YES')
+#                     form= CustomerForm
+#                     return render(request, 'register/allinone.html', {'form': form})
+#         else :
+#                 print("Hello")
+#                 print(request.POST.get('msisdn'))
+#                 print(request.session.get('msisdn',1))
+#                 msisdn = request.session.get('msisdn')
+#                 form = CustomerForm(request.POST)
+#                 form.fields
+#                 if form.is_valid() :
+#                     print('YAHOO')
+#
+#                     del request.session['msisdn']
+#                     form.save()
+#                 return render(request, 'register/allinone.html',{'form': form})
+#
+#     form =MSISDNForm
+#     return render(request, 'register/allinone.html', {'form': form})
 
 def get_otp(request):
     # form_id= 1
@@ -166,14 +154,19 @@ def get_otp(request):
             form = MSISDNForm(request.POST)
             import re
             pattern = '21191[0-9]+'
-            if form.is_valid() and len(re.findall(pattern, msisdn)) == 1 :
-                request.session[msisdn]=gen_otp(6) #send_sms(msisdn)
+            # found = False
+            found = CUSTOMER.objects.filter(MOBILE_NUMBER=msisdn).exists()
+            if form.is_valid() and len(re.findall(pattern, msisdn)) == 1  and not found:
+                request.session[msisdn]= send_message(msisdn)#gen_otp(6) #send_sms(msisdn)
                 form = OTPFORM(initial={'msisdn':msisdn,'otp1':request.session[msisdn] } )
                 form.fields['msisdn'].widget.attrs['hidden'] = True
                 form.fields['msisdn'].label = 'Give Otp for ' + str(msisdn)
                 # form.fields['otp1'].widget = forms.HiddenInput()
                 print(request.session[msisdn])
                 return render(request, 'register/allinone.html', {'form': form})
+            elif found:
+                messages.info(request, 'Zain Already have Your Data. Kindly  wait for Zain Feedback. Thank You.')
+                form = MSISDNForm()
             else :
                 messages.error(request, 'Please Give Valid Zain Number')
 
@@ -202,4 +195,4 @@ def cancel(request):
     #     del request.session[key]
     # form = MSISDNForm()
     messages.info(request, "Your request has been cancelled, Kindly retry.")
-    return redirect('../new/',request)
+    return redirect('../',request)

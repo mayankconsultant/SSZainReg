@@ -121,24 +121,24 @@ class City(models.Model):
 
 
 class CUSTOMER(models.Model):
-    class ID_TYPES(models.TextChoices):
-        WORK_ID = ("1", "Work ID")
-        STUDENT_ID = ("2", "Student ID")
-        UN_ID=("3",'UN ID'),
-        POLICE_MILITARY_ID=("4",'Military,Polica,SPLM'),
-        TRIBAL_ID=("5",'Tribal Chiefs Cert.'),
-        NATIONAL_ID=("6",'National ID'),
-        PASSPORT=("7",'Passport'),
-        VOTING_ID=("8",'Voting Card'),
-        DRIVING_LICENCE_ID=("9",'Driving License')
-
+    ID_TYPES = (
+         ("1", "Work ID"),
+         ("2", "Student ID"),
+         ("3",'UN ID'),
+        ("4",'Military,Polica,SPLM'),
+        ("5",'Tribal Chiefs Cert.'),
+        ("6",'National ID'),
+        ("7",'Passport'),
+        ("8",'Voting Card'),
+        ("9",'Driving License')
+    )
     """Model definition for CUSTOMER."""
 
     # TODO: Define fields here
     MOBILE_NUMBER = models.CharField(max_length=12)
     FIRST_NAME = models.CharField(max_length=30)
     LAST_NAME = models.CharField(max_length=30)
-    ID_TYPE = models.CharField(max_length=30, choices=ID_TYPES.choices)
+    ID_TYPE = models.CharField(max_length=30, choices=ID_TYPES)
     ID_NUMBER = models.CharField(max_length=15)
     gender = models.CharField(
         max_length=10, choices=Gender.choices,default=Gender.MALE

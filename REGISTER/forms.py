@@ -1,11 +1,8 @@
 from django import forms
 from django.shortcuts import  render, reverse
-# from twilio import client
 
-from .models import CUSTOMER , Locations , states,county,payam
+from .models import CUSTOMER , states,county,payam
 
-from django.core.exceptions import ValidationError
-from .utils import  gen_otp , send_sms
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
@@ -21,21 +18,7 @@ class MSISDNForm(forms.Form):
     msisdn=forms.CharField(min_length=12,max_length=12 ,help_text="Example: 211912399501",
                            error_messages=my_default_errors,
                            widget=forms.TextInput(attrs={'placeholder':'211912399501'}))
-    # otp_gen=forms.CharField(max_length=6, )
 
-    # def clean(self):
-    #     import re
-    #     pattern = '21191[0-9]+'
-    #     print ('IN CLEAN')
-    #     cleaned_data = super().clean()
-    #     # print (type (cleaned_data.get('msisdn') ))
-    #     msisdn = self.cleaned_data.get('msisdn')
-    #     print(msisdn)
-    #     if ( len(re.findall(pattern, msisdn)) < 1 ):
-    #         print('Error Occured')
-    #         # raise ValidationError({'msisdn':'Please Put valid Zain Mobile Number'})
-    #         raise ValidationError ('Invalid value', code='invalid')
-    #     return msisdn
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
