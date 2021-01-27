@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #3rd Party
     'django_extensions',
     'crispy_forms',
+    'django_countries',
 
 
     #My APps
@@ -144,3 +145,27 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(MAIN_PROJECT, 'REGISTER/static/'),
 )
+
+
+ACCOUNT_SID = 'AC0bc30ff886a6f08d90527c18adea426a' #'AC41778dfd7ae6875f7ae976b74eaa0679'
+ACCOUNT_TOKEN = 'c6f7cbb0ca6904aea996be3162223bc1' #'23b2318bd1b28b92998f8113cb6fa6cf'
+FROM_PHONE = '+12512773288' #+15089805364'
+
+
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
+SHELL_PLUS_PRINT_SQL = True
+
+
+#django_countries
+
+COUNTRIES_FIRST=['SS','SD','IN','CN','US']

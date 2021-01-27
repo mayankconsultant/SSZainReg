@@ -31,9 +31,10 @@
   </script>
 
   {% if messages %}
-<div class="alert alert-success">
+
     {% for m in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</li>
+    <div class="alert {{m.tags}} alert-dismissible" role="alert">
+    {{ m }}
     {% endfor %}
 </div>
 {% endif %}

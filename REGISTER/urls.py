@@ -16,12 +16,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-from .views import  home,list
+from .views import  home,list , RegisterView,Verify_OTP, AllInOne,get_otp, load_COUNTY, load_PAYAM, cancel
 
 urlpatterns = [
     path(   'home/', 
             home.as_view(template_name="register/home.html")  ,        name="home"),
+    path(   'register/',
+            RegisterView.as_view()  ,        name="register"),
+    path(   'verify/',
+            Verify_OTP.as_view()  ,        name="verify-otp"),
     path(   'list/', 
             list.as_view(template_name="register/list.html")  ,        name="list"),
+path(   'new_register/',
+            AllInOne.as_view()  ,        name="new_register"),
+path(   'new/',
+            get_otp  ,        name="new_register"),
+path(   'county/',
+            load_COUNTY  ,        name="load_COUNTY"),
+path(   'payam/',
+            load_PAYAM  ,        name="load_PAYAM"),
+path(   'cancel/',
+            cancel  ,        name="cancel"),
     
 ]

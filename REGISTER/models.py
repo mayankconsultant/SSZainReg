@@ -5,6 +5,12 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 
+from django.core.exceptions import ValidationError
+
+from PIL import Image
+
+from django_countries.fields import CountryField
+
 # Create your models here.
 
 # UN_ID=(3,'UN ID'),
@@ -15,6 +21,45 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 # VOTING_ID=(8,'Voting Card'),
 # DRIVING_LICENCE_ID=(9,'Driving License')
 
+def customer_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
+    return 'cust_{0}/{1}'.format(instance.MOBILE_NUMBER, filename)
+
+
+class states(models.Model):
+    name= models.CharField(max_length=100)
+
+
+    def __str__(self):
+        # return str(self.name).upper()
+        return  self.name
+
+    # def __unicode__(self):
+    #         return str(self.name).upper()
+
+class county (models.Model):
+    name =models.CharField(max_length=100)
+    states= models.ForeignKey(states,on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return  self.name
+
+
+
+class payam (models.Model):
+    name =models.CharField(max_length=100)
+    county = models.ForeignKey(county,on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.name
+
+
+
+class Locations(models.Model):
+    STATE =models.CharField(max_length=100)
+    COUNTY  =models.CharField(max_length=100)
+    PAYAM =models.CharField(max_length=100)
+    BOMA =models.CharField(max_length=100, blank=True,null=True)
 
 class Gender(models.TextChoices):
     MALE = ("MALE", "MALE")
@@ -72,6 +117,9 @@ class City(models.Model):
     def __unicode__(self):
             return self.name
 
+
+
+
 class CUSTOMER(models.Model):
     class ID_TYPES(models.TextChoices):
         WORK_ID = ("1", "Work ID")
@@ -96,15 +144,20 @@ class CUSTOMER(models.Model):
         max_length=10, choices=Gender.choices,default=Gender.MALE
     )
     DOB = models.DateField(blank=True, null=True, verbose_name="Date Of Birth")
-    NATIONAL =models.ForeignKey(Country,on_delete=models.DO_NOTHING,blank=True,null=True)
+    COUNTRY =CountryField()
     ADDRESS = models.CharField(max_length=50, blank=True,null=True,
                               )
-    STATE =models.ForeignKey(State,on_delete=models.DO_NOTHING,blank=True,null=True)
-    CITY = models.ForeignKey(City, on_delete=models.DO_NOTHING,blank=True,null=True)
-    PAYAM = models.CharField(max_length=50,blank=True,null=True)
+    STATE =models.ForeignKey(states,on_delete=models.DO_NOTHING)
+    CITY = models.CharField(max_length=100)
+    COUNTY = models.ForeignKey(county,on_delete=models.DO_NOTHING)
+    PAYAM = models.ForeignKey(payam,on_delete=models.DO_NOTHING)
     BOMA = models.CharField(max_length=50,blank=True,null=True)
+    ID_FILE =models.ImageField(upload_to = customer_directory_path)
+    CREATED_DATE = models.DateField(auto_now_add=True)
 
-    confirmed=models.BooleanField(verbose_name="I confirm all details provided are true")
+
+
+
 
     class Meta:
         """Meta definition for CUSTOMER."""
@@ -114,57 +167,15 @@ class CUSTOMER(models.Model):
 
     def __str__(self):
         """Unicode representation of CUSTOMER."""
-        return self.msisdn + " " + self.first_name + self.last_name
+        return self.MOBILE_NUMBER + " " + self.FIRST_NAME + self.LAST_NAME
 
+    def save(self, *args, **kwargs):
+        super(CUSTOMER, self).save(*args, **kwargs)
 
-class CustomerForm(forms.ModelForm):
-    """Form definition for MODELNAME."""
+        img = Image.open(self.ID_FILE.path)
 
-    class Meta:
-        """Meta definition for MODELNAMEform."""
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.ID_FILE.path)
 
-        model = CUSTOMER
-        fields = "__all__"
-        widgets = {
-            'gender': forms.RadioSelect,
-            'DOB': forms.DateInput(format=('%d/%b/%Y'),
-                                             attrs={'class': 'form-control', 'placeholder': 'Select a date',
-                                                    'type': 'date'}),
-                   }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-        'MOBILE_NUMBER',
-        Row(
-                Column('FIRST_NAME', css_class='form-group col-md-6 mb-0'),
-                Column('LAST_NAME', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-        Row(
-                Column('ID_TYPE', css_class='form-group col-md-6 mb-0'),
-                Column('ID_NUMBER', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-        Row(
-                Column('gender', css_class='form-group col-md-6 mb-0'),
-                Column('DOB', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-        'ADDRESS',
-        Row(
-                Column('NATIONAL', css_class='form-group col-md-4 mb-0'),
-                Column('STATE', css_class='form-group col-md-4 mb-0'),
-                Column('CITY', css_class='form-group col-md-4 mb-0'),
-                css_class='form-row'
-            ),
-        Row(
-                Column('PAYAM', css_class='form-group col-md-6 mb-0'),
-                Column('BOMA', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-        Column('confirmed', css_class='form-group col-md-12 mt-3 mb-5 '),
-
-        Submit('submit', 'Confirmed')
-        )

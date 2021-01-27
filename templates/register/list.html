@@ -37,10 +37,12 @@
                   <th scope="col">Date OF Birth</th>
                   <th scope="col">Address</th>
                   <th scope="col">Country</th>
-                  <th scope="col">State</th>
                   <th scope="col">City</th>
+                  <th scope="col">State</th>
+                  <th scope="col">County</th>
                   <th scope="col">PAYAM</th>
                   <th scope="col">BOMA</th>
+                   <th scope="col">ID_PROOF</th>
                   <!-- <th scope="col">Joined On</th> -->
                   <!-- <th scope="col">Department</th> -->
                 </tr>
@@ -58,10 +60,12 @@
                    <td>{{d.DOB}}</td>
                      <td>{{d.ADDRESS}}</td>
                    <td>{{d.NATIONAL}}</td>
-                   <td>{{d.STATE}}</td>
                    <td>{{d.CITY}}</td>
+                   <td>{{d.STATE}}</td>
+                   <td>{{d.COUNTY}}</td>
                    <td>{{d.PAYAM}}</td>
                    <td>{{d.BOMA}}</td>
+                   <td> <img src={{d.ID_FILE.url}} alt=""> </td>
                 </tr>
                 {% endfor %}
               </tbody>
