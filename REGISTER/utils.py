@@ -53,6 +53,7 @@ def extract_text(filepath, id_num,first_name,last_name):
         k = pytesseract.image_to_string(Image.open(r'media\ALL\blur_' + os.path.basename(filepath)), config=config)
     except Exception as e:
         import cv2
+        print('IN EXCEPTION CV2')
         # im = cv2.imread('./test3.jpg')
         k = pytesseract.image_to_string(cv2.imread(r'media\ALL\blur_' + os.path.basename(filepath)), config=config)
 
