@@ -152,7 +152,7 @@ class CUSTOMER(models.Model):
     COUNTY = models.ForeignKey(county,on_delete=models.DO_NOTHING)
     PAYAM = models.ForeignKey(payam,on_delete=models.DO_NOTHING)
     BOMA = models.CharField(max_length=50,blank=True,null=True)
-    ID_FILE =models.ImageField(upload_to = customer_directory_path)
+    ID_PROOF =models.ImageField(upload_to = customer_directory_path, verbose_name='ID PROOF FILE')
     CREATED_DATE = models.DateField(auto_now_add=True)
 
 
@@ -172,10 +172,10 @@ class CUSTOMER(models.Model):
     def save(self, *args, **kwargs):
         super(CUSTOMER, self).save(*args, **kwargs)
 
-        img = Image.open(self.ID_FILE.path)
+        img = Image.open(self.ID_PROOF.path)
 
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
             img.thumbnail(output_size)
-            img.save(self.ID_FILE.path)
+            img.save(self.ID_PROOF.path)
 

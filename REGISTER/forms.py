@@ -147,7 +147,7 @@ class CustomerForm(forms.ModelForm):
                 Column('BOMA', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row'
             ),
-        Column('ID_FILE',css_class='form-group col mb-0'),
+        Column('ID_PROOF',css_class='form-group col mb-0'),
         Column('confirmed', css_class='form-group col-md-12 mt-3 mb-5 '),
 
         Submit('submit', 'Confirmed', css_class='form-group col-sm-6 col-md-3 col-lg-3'),

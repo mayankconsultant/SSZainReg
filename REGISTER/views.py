@@ -1,5 +1,5 @@
 from django import forms
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.urls import reverse_lazy
 
 from django.contrib import messages
@@ -14,7 +14,7 @@ from .models import CUSTOMER ,  payam, county,states
 
 from .forms import MSISDNForm , OTPFORM , CustomerForm
 
-from .utils import  send_message
+from .utils import  send_message, extract_text
 
 
 
@@ -196,3 +196,12 @@ def cancel(request):
     # form = MSISDNForm()
     messages.info(request, "Your request has been cancelled, Kindly retry.")
     return redirect('../',request)
+
+def check_pic(request):
+   k=  extract_text(r'C:\Users\MayankPC\OneDrive\BSCS IX Knowledge BANK\PYTHON\SSZainReg\media\ALL\test.jpg')
+   print (k)
+
+   # if '11276842157' in k:
+   #     k='True'
+
+   return HttpResponse(k)

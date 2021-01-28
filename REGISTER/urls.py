@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-from .views import  list , get_otp, load_COUNTY, load_PAYAM, cancel
+from .views import  list , get_otp, load_COUNTY, load_PAYAM, cancel,check_pic
 
 urlpatterns = [
     # path(   'home/',
@@ -37,5 +37,7 @@ path(   'payam/',
             load_PAYAM  ,        name="load_PAYAM"),
 path(   'cancel/',
             cancel  ,        name="cancel"),
-    
+
+path(   'check_img/',
+            check_pic  ,        name="check"),
 ]

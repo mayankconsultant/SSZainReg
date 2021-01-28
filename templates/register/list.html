@@ -35,6 +35,7 @@
                   <th scope="col">ID Number</th>
                   <th scope="col">Gender</th>
                   <th scope="col">Date OF Birth</th>
+                  <th scope="col">Actions</th>
                   <th scope="col">Address</th>
                   <th scope="col">Country</th>
                   <th scope="col">City</th>
@@ -58,14 +59,21 @@
                   <td>{{d.ID_NUMBER}}</td>
                    <td>{{d.gender}}</td>
                    <td>{{d.DOB}}</td>
-                     <td>{{d.ADDRESS}}</td>
+                    <td class="block" style="width:100%">
+                      <a class="text-success" role="button" href="#">Accept</a> |
+                      <a class="text-info" role="button" href="#">Reject</a> |
+                      <a class="text-danger" role="button" href="#">Delete</a>
+                   </td>
+                   <td>{{d.ADDRESS}}</td>
                    <td>{{d.COUNTRY.name}}</td>
                    <td>{{d.CITY}}</td>
                    <td>{{d.STATE}}</td>
                    <td>{{d.COUNTY}}</td>
                    <td>{{d.PAYAM}}</td>
                    <td>{{d.BOMA}}</td>
-                   <td> <img src={{d.ID_FILE.url}} alt=""> </td>
+
+                   <td> <img src={{d.ID_PROOF.url}} alt=""> </td>
+
                 </tr>
                 {% endfor %}
               </tbody>

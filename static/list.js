@@ -1,7 +1,7 @@
 $('#userDetailTable').DataTable({
 
 'deferRender': false,
-
+"autoWidth": true,
 data:window.data,
 responsive:true,
 dom:'Bfrtip',
