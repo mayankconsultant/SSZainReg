@@ -120,40 +120,45 @@ class CustomerForm(forms.ModelForm):
         self.helper.layout = Layout(
         Column('MOBILE_NUMBER'),
         Row(
-                Column('FIRST_NAME', css_class='form-group col-md-6 mb-0'),
-                Column('LAST_NAME', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
+                Column('FIRST_NAME', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('SECOND_NAME', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('THIRD_NAME', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('LAST_NAME', css_class='form-group col-md-3 mb-4 mt-3'),
+                css_class='form-row border'
             ),
         Row(
-                Column('ID_TYPE', css_class='form-group col-md-6 mb-0'),
-                Column('ID_NUMBER', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
+                Column('ID_TYPE', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('ID_NUMBER', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('gender', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('DOB', css_class='form-group col-md-3 mb-4 mt-3'),
+                css_class='form-row border'
+            ),
+        # Row(
+        #
+        #         css_class='form-row'
+        #     ),
+        # 'ADDRESS',
+        Row(
+                Column('ADDRESS', css_class='form-group col-md-4 mb-4 mt-3'),
+                Column('CITY', css_class='form-group col-md-4 mb-4 mt-3'),
+                Column('COUNTRY', css_class='form-group col-md-4 mb-4 mt-3'),
+                css_class='form-row border'
             ),
         Row(
-                Column('gender', css_class='form-group col-md-6 mb-0'),
-                Column('DOB', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-        'ADDRESS',
-        Row(
-                Column('COUNTRY', css_class='form-group col-md-4 mb-0'),
-                Column('CITY', css_class='form-group col-md-4 mb-0'),
-                Column('STATE', css_class='form-group col-md-4 mb-0'),
-                css_class='form-row'
-            ),
-        Row(
-                Column('COUNTY', css_class='form-group col-md-4 mb-0'),
-                Column('PAYAM', css_class='form-group col-md-4 mb-0'),
-                Column('BOMA', css_class='form-group col-md-4 mb-0'),
-                css_class='form-row'
+                Column('STATE', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('COUNTY', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('PAYAM', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('BOMA', css_class='form-group col-md-3 mb-4 mt-3'),
+                css_class='form-row border'
             ),
         Column('ID_PROOF',css_class='form-group col mb-0'),
         Column('confirmed', css_class='form-group col-md-12 mt-3 mb-5 '),
 
-        Submit('submit', 'Confirmed', css_class='form-group col-sm-6 col-md-3 col-lg-3'),
-        Submit('cancel', 'CANCEL', css_class='form-group col-sm-6 col-md-3 col-lg-3 btn-danger',
+        Row(
+        Submit('submit', 'Confirmed', css_class='form-group g-3 col-sm-6 col-md-3 col-lg-3 mx-auto'),
+        Submit('cancel', 'CANCEL', css_class='form-group g-3 col-sm-6 col-md-3 col-lg-3 btn-danger mx-auto',
                onclick="window.location.href = '{}';".format(reverse('cancel'))
-               ),
+               ),   css_class='row g-3' ),
         )
         self.fields['COUNTY'].queryset = county.objects.none()
         self.fields['PAYAM'].queryset = payam.objects.none()
@@ -163,7 +168,7 @@ class CustomerForm(forms.ModelForm):
             try:
                 STATE = int(self.data.get('STATE'))
                 print('STATE IS ' + str(STATE))
-                self.fields['COUNTY'].queryset = county.objects.filter(states=STATE)
+                self.fields['COUNTY'].queryset = county.objects.filter(states=STATE).order_by('name')
             except (ValueError, TypeError):
                 pass  # invalid input from the client; ignore and fallback to empty City queryset
         elif self.instance.pk:
@@ -172,8 +177,8 @@ class CustomerForm(forms.ModelForm):
             try:
                 COUNTY = self.data.get('COUNTY')
                 STATE = self.data.get('STATE')
-                self.fields['PAYAM'].queryset = payam.objects.filter(county=COUNTY)
+                self.fields['PAYAM'].queryset = payam.objects.filter(county=COUNTY).order_by('name')
             except (ValueError, TypeError):
                 pass  # invalid input from the client; ignore and fallback to empty City queryset
         elif self.instance.pk:
-            self.fields['PAYAM'].queryset = self.instance.county.payam_set.order_by('name')
+            self.fields['PAYAM'].queryset = self.instance.county.payam_set.order_by('name').order_by('name')

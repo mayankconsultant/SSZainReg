@@ -8,18 +8,11 @@
 <h1 class="mx-auto ">Zain Thanks you to visit Registration System </h1>
 </div>    
 <div class="row ml-2 mt-2 bg-warning">
-  
-<form method="post"> 
-  {% csrf_token %} 
-<!--  {{ form | crispy }}-->
 
-<!--  <input type="submit" value="Save"> -->
+  {{pic }}
+  <img src="{{ pic }}" alt="NO_DATA" style="width:40%; height:40%">
+  <h1> {{ data }} </h1>
 
-  {% crispy form %}
-
-
-
-</form> 
 
 </div>
 </div>

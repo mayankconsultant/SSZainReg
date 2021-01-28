@@ -137,6 +137,8 @@ class CUSTOMER(models.Model):
     # TODO: Define fields here
     MOBILE_NUMBER = models.CharField(max_length=12)
     FIRST_NAME = models.CharField(max_length=30)
+    SECOND_NAME = models.CharField(max_length=30,blank=True,null=True)
+    THIRD_NAME = models.CharField(max_length=30,blank=True,null=True)
     LAST_NAME = models.CharField(max_length=30)
     ID_TYPE = models.CharField(max_length=30, choices=ID_TYPES)
     ID_NUMBER = models.CharField(max_length=15)
