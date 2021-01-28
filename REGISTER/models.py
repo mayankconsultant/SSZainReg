@@ -173,7 +173,7 @@ class CUSTOMER(models.Model):
 
     def save(self, *args, **kwargs):
         super(CUSTOMER, self).save(*args, **kwargs)
-
+        print( 'Saving Image HAhaha')
         img = Image.open(self.ID_PROOF.path)
 
         if img.height > 300 or img.width > 300:

@@ -16,8 +16,13 @@ from .forms import MSISDNForm , OTPFORM , CustomerForm
 
 from .utils import  send_message, extract_text
 
+from django.conf import settings
+from pathlib import Path
 
 
+from PIL import Image , ImageFilter
+import pytesseract
+import os
 
 class list(ListView):
     model = CUSTOMER
@@ -108,6 +113,9 @@ class AllInOne(SuccessMessageMixin, CreateView):
 #     form =MSISDNForm
 #     return render(request, 'register/allinone.html', {'form': form})
 
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
 def get_otp(request):
     # form_id= 1
     if request.method == 'POST':
@@ -136,13 +144,36 @@ def get_otp(request):
             form =CustomerForm(request.POST,request.FILES)
             if form.is_valid():
                 print('YAHOO')
+                # form.save(commit=False)
                 # print(request.POST.get('COUNTY'))
                 # p= CUSTOMER(ID_FILE = form.cleaned_data['ID_TYPE'])
                 # p.save()
-                form.save()
-                messages.success(request,"Your Data is saved. Zain will verify it in 2 Working Days")
-                form = MSISDNForm()
-                return render(request, 'register/allinone.html', {'form': form})
+
+                img_src= form.cleaned_data['ID_PROOF']
+                # print(img_src)
+                filepath = default_storage.save('tmp_'+str(img_src),ContentFile(img_src.read()))
+                filepath = os.path.join(settings.MEDIA_ROOT, filepath)
+                # orig_name = img_src.field.upload_to
+                print(filepath)
+                # os.path.join(settings.MEDIA_ROOT, orig_name)
+                # original_file = Path(settings.MEDIA_ROOT).joinpath(orig_name)
+                # print(original_file)
+                # j='popop'
+                found= extract_text(filepath, form.cleaned_data['ID_NUMBER'],form.cleaned_data['FIRST_NAME'], form.cleaned_data['LAST_NAME'])
+                # print(j)
+                # print(form.cleaned_data['ID_NUMBER'] in j)
+                if found:
+                    form.save()
+                    messages.success(request,"Your Data is saved. Zain will verify it in 2 Working Days")
+                    form = MSISDNForm()
+                    return render(request, 'register/allinone.html', {'form': form})
+                else:
+                    os.remove(filepath)
+                    messages.error(request, "Your Data and ID Proof doesn't match")
+                    # form = CustomerForm(initial={'MOBILE_NUMBER': msisdn, 'COUNTRY': 'SS'})
+                    # form.fields['MOBILE_NUMBER'].widget.attrs['hidden'] = True
+                    # form.fields['MOBILE_NUMBER'].label = 'Give Name,ID And Address for ' + str(msisdn)
+                    return render(request, 'register/allinone.html', {'form': form})
             else :
                 print(form.errors)
                 messages.error(request, form.errors)
@@ -197,11 +228,19 @@ def cancel(request):
     messages.info(request, "Your request has been cancelled, Kindly retry.")
     return redirect('../',request)
 
+
+
+
 def check_pic(request):
-   img_src = r'C:\Users\MayankPC\OneDrive\BSCS IX Knowledge BANK\PYTHON\SSZainReg\media\ALL\test.jpg'
+
+   print(Path(settings.MEDIA_ROOT))
+   img_src= r'\ALL\test.jpg'
+   img_src = (settings.MEDIA_ROOT) + img_src
+
    k=  extract_text(img_src)
    # print (k)
-   img_src = r'..\media\ALL\test.jpg'
+
+   # img_src = r'..\media\ALL\test.jpg'
 
    # if '11276842157' in k:
    #     k='True'

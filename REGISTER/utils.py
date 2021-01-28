@@ -25,9 +25,9 @@ def send_message(msisdn):
     Api = Api + '&ApiKey=TqEuq9o58233RcYkFIm5w1CS2HB7yJHejc0a3tbMpfg%3D&ClientId=94393ba7-afef-4744-880b-175368936e9b'
 
 
-    r = requests.get(url=Api)
+    # r = requests.get(url=Api)
     # print(Api)
-    print (r.status_code)
+    # print (r.status_code)
     return otp
 
 
@@ -36,21 +36,39 @@ from PIL import Image , ImageFilter
 import pytesseract
 import os
 
-def extract_text(filepath):
+import  re
+
+def extract_text(filepath, id_num,first_name,last_name):
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
-    # config = ('-l eng --oem 1 --psm 3')
+    config = ('-l eng --oem 1 --psm 3')
 
-    config = (' -l eng')
+    # config = (' -l eng')
 
     # print (image_to_string(Image.open(filepath),lang='eng'))
     img_grey = Image.open(filepath)
     img_grey = img_grey.convert('L')
     img_grey.save('media\ALL\grey_' + os.path.basename(filepath))
     img_grey = Image.open('media\ALL\grey_' + os.path.basename(filepath))
-    blurImage = img_grey.filter(ImageFilter.DETAIL)
+    blurImage = img_grey.filter(ImageFilter.DETAIL )
+    os.remove('media\ALL\grey_' + os.path.basename(filepath))
     blurImage.save(r'media\ALL\blur_' + os.path.basename(filepath))
     k = pytesseract.image_to_string(Image.open(r'media\ALL\blur_' + os.path.basename(filepath)) , config=config)
+    os.remove(r'media\ALL\blur_' + os.path.basename(filepath))
+    points = 0
+    if id_num in k :points +=1
+    if first_name in k: points += 1
+    if last_name in k: points += 1
+    # print(k)
+    # print( data in k)
+    # print(k)
+    # print(data in k)
     # k= k.split('\n')
-    return k
+    # for j in k:
+    #     print( str(j) + ' Matched with ' + str(k))
+    #     print(j in str(k))
+    if points >=2 :
+        return True
+    else :
+        return False

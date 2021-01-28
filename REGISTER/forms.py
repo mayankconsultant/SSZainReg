@@ -45,10 +45,11 @@ class OTPFORM(forms.Form):
         self.helper.layout = Layout(
             Column('msisdn', css_class='form-group  col-3 mt-3 mb-5 text-light card-body bg-success'),
             Column('otp', css_class='form-group col-3 mb-5'),
+            Row(
             Submit('submit', 'Validate and Give Details', css_class='form-group col-sm-6 col-md-3 col-lg-3'),
-            Submit('cancel', 'CANCEL', css_class='form-group col-sm-6 col-md-3 col-lg-3 btn-danger',
+            Submit('cancel', 'CANCEL', css_class='form-group col-sm-6 col-md-3 col-lg-3 btn-warning mx-auto',
                    onclick="window.location.href = '{}';".format(reverse('cancel'))
-                   )
+                   ) )
         )
 
 
@@ -117,6 +118,8 @@ class CustomerForm(forms.ModelForm):
         # print('INTIAL')
         # print (msisdn)
         self.helper.labels_uppercase = True
+        # self.helper.form_class = 'form-horizontal'
+        # self.helper.label_class = 'col-md-2'
         self.helper.layout = Layout(
         Column('MOBILE_NUMBER'),
         Row(
@@ -124,39 +127,41 @@ class CustomerForm(forms.ModelForm):
                 Column('SECOND_NAME', css_class='form-group col-md-3 mb-4 mt-3'),
                 Column('THIRD_NAME', css_class='form-group col-md-3 mb-4 mt-3'),
                 Column('LAST_NAME', css_class='form-group col-md-3 mb-4 mt-3'),
-                css_class='form-row border'
+                css_class='form-row  '
             ),
         Row(
                 Column('ID_TYPE', css_class='form-group col-md-3 mb-4 mt-3'),
                 Column('ID_NUMBER', css_class='form-group col-md-3 mb-4 mt-3'),
                 Column('gender', css_class='form-group col-md-3 mb-4 mt-3'),
                 Column('DOB', css_class='form-group col-md-3 mb-4 mt-3'),
-                css_class='form-row border'
+                css_class='form-row '
             ),
         # Row(
         #
         #         css_class='form-row'
         #     ),
         # 'ADDRESS',
-        Row(
-                Column('ADDRESS', css_class='form-group col-md-4 mb-4 mt-3'),
-                Column('CITY', css_class='form-group col-md-4 mb-4 mt-3'),
-                Column('COUNTRY', css_class='form-group col-md-4 mb-4 mt-3'),
-                css_class='form-row border'
-            ),
-        Row(
+            Row(
                 Column('STATE', css_class='form-group col-md-3 mb-4 mt-3'),
                 Column('COUNTY', css_class='form-group col-md-3 mb-4 mt-3'),
                 Column('PAYAM', css_class='form-group col-md-3 mb-4 mt-3'),
                 Column('BOMA', css_class='form-group col-md-3 mb-4 mt-3'),
-                css_class='form-row border'
+                css_class='form-row '
             ),
+        Row(
+                Column('ADDRESS', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('CITY', css_class='form-group col-md-3 mb-4 mt-3'),
+                Column('COUNTRY', css_class='form-group col-md-3 mb-4 mt-3'),
+                css_class='form-row '
+            ),
+
         Column('ID_PROOF',css_class='form-group col mb-0'),
         Column('confirmed', css_class='form-group col-md-12 mt-3 mb-5 '),
 
         Row(
-        Submit('submit', 'Confirmed', css_class='form-group g-3 col-sm-6 col-md-3 col-lg-3 mx-auto'),
-        Submit('cancel', 'CANCEL', css_class='form-group g-3 col-sm-6 col-md-3 col-lg-3 btn-danger mx-auto',
+        Submit('submit', 'SUBMIT', css_class='form-group g-3 col-sm-6 col-md-3 col-lg-3 mx-auto bg-success'),
+
+        Submit('cancel', 'CANCEL', css_class='form-group g-3 col-sm-6 col-md-3 col-lg-3 btn-warning mx-auto',
                onclick="window.location.href = '{}';".format(reverse('cancel'))
                ),   css_class='row g-3' ),
         )
