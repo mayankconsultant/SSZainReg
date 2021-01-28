@@ -39,22 +39,31 @@ import os
 import  re
 
 def extract_text(filepath, id_num,first_name,last_name):
-    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
-
-    config = ('-l eng --oem 1 --psm 3')
-
-    # config = (' -l eng')
-
-    # print (image_to_string(Image.open(filepath),lang='eng'))
     img_grey = Image.open(filepath)
     img_grey = img_grey.convert('L')
     img_grey.save('media\ALL\grey_' + os.path.basename(filepath))
     img_grey = Image.open('media\ALL\grey_' + os.path.basename(filepath))
-    blurImage = img_grey.filter(ImageFilter.DETAIL )
+    blurImage = img_grey.filter(ImageFilter.DETAIL)
     os.remove('media\ALL\grey_' + os.path.basename(filepath))
     blurImage.save(r'media\ALL\blur_' + os.path.basename(filepath))
-    k = pytesseract.image_to_string(Image.open(r'media\ALL\blur_' + os.path.basename(filepath)) , config=config)
+    config = ('-l eng --oem 1 --psm 3')
+
+    try:
+        pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+        k = pytesseract.image_to_string(Image.open(r'media\ALL\blur_' + os.path.basename(filepath)), config=config)
+    except Exception as e:
+        import cv2
+        # im = cv2.imread('./test3.jpg')
+        k = pytesseract.image_to_string(cv2.imread(r'media\ALL\blur_' + os.path.basename(filepath)), config=config)
+
+
+
+
+    # config = (' -l eng')
+
+    # print (image_to_string(Image.open(filepath),lang='eng'))
+
+
     os.remove(r'media\ALL\blur_' + os.path.basename(filepath))
     points = 0
     if id_num in k :points +=1
