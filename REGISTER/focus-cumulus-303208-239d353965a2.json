@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "focus-cumulus-303208",
+  "private_key_id": "239d353965a2daa1edeafc39f8c17de3c3bfaf01",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC4LwdVKYJJM5BD\nutibbWbb2z38Y+dA7C6NLKCNsY20XiRv964+afzmaEvU9ah5kXMJ+SDXyn3o7kW7\nmH7rustChIxlexmoAKhEllunS4o/1E68VEj9j/EAAdCyivH0E9NNHuL3p2v5f/S6\n9C2K/u8n0G6EU+LcNGIZDNdBEY5b/820RN3yWnc96O5JtDsgN1/nThVL/ybZXKrB\no2f9VOu5QIVLGiDm3K/lksU7ctd3t8kSqmDDjYLvYfoZvS+qK2Z8nl3/lweIfHbn\nADrNgSXJSRn/T1qz7CylefWTWnMzPhogNDKGCRmqJk0ZSKgLCvfnSXgh26Ec994/\nC4UyxuKlAgMBAAECggEAAMwlVDtQhtgcDwsDTpL378pAd7QIB4ouPmq7zDlBU49X\nyYtRPBBx6Z54e5TPtK0KSjgDqiOEjYpgj2oe3I7ru98+i17v0sAj+l4LSgtj7xhQ\nefTEdyKVKMqZOHitCQE/+DTCx084grVI3jlZ7CDj8LBwlg6V7B2m8hRR50R38RKF\n0TG8dkxpJPgo0/zE8RKwGWsDRvEVDwJV73oHrcNW1zptyq1WeFQSQjWT8HjKL4mX\neGjH1LlXEg6FjzKPnIBErSxyX7ytLTYjSmKz+9H9M9sR0wHrELV7RamxI4hZGboK\nL7hOjFRB8Aly1jahn7eJPj2FEOheKgoeL8QtO5BEqQKBgQDzjL4Jlp/DwDYDvVc7\nhiSq+t+f54wiVK4XRBsa6Xgt2F52lUSoq7hYhIh9WAtfI3K3/5/uWOnsGnO3J/lw\nXDCIuovBeyxGOt3pu3vUwiN3Z7PN4g6AIBZYPhp9NSSZQ0usLljb7bFu/gQJlEBV\nUWxJUdYVymswuoUnfNvqwtAl6QKBgQDBmWGyuFHfIWZpZpvD+SN3tCsRg7PAGA/W\npe/qBaLoOJrD9RjGzFv5S/xjXFFzEmJhmFckmPK3oTJF54GbnJSIGe0ghi0IOinw\nneCKkAOqdhaZ3BNz1lSbNY8DyAFnSkQoPaXdzYWp9KNkh4rWlWMsMRGrfEN9UxTo\nCHSfaIUVXQKBgCHLl9swwX6iP1yJe39Q/+mR4lIICVQCOB4WX0R+vSRvb7w4vkxB\nd9Ugnuf1va439wU9PW4PfHY8vW3e6CgFQt7WM+pnMx+Tr5NtZqOBRPaetz6MbcKt\nsSwRgg95vlheFDQSQlZSR1rFeL3zinHMWKBb8L8ZVYJvf2aZVtLesY9xAoGAfDw5\nfb7aix2b4rd97dzK7d4oZSznBLZsM4p40uybBfqNFoMKS0iJHQmuBPURL470ozxn\nb4zW9Q/0evd9LKbmihBZIy33Z/grQcWOelzAfXsaNdIMiaFY2eEczYhjni0CX/Bv\nqE5jIBVlZPW2Gs3yvkEe3bT4ekv+dog2jrU78eECgYAdS39o504+nroIpR6ZLpKW\nKk8zuVcGxTXnkPtrZb4dgvq+OA7JZ8Wm/kPQ/oaeI6hmI+Zc8vwXeOZv5kdOtn5U\nLVoYw48kSxg8uezTkXXbhPn1xs012Bo33cBdNHS/x7jLIrxS712L+oldG2VNP16y\n8LEp81HI8Ibq5x36tkgSTw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "zainreg@focus-cumulus-303208.iam.gserviceaccount.com",
+  "client_id": "109920361748301275697",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/zainreg%40focus-cumulus-303208.iam.gserviceaccount.com"
+}
