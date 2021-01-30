@@ -154,7 +154,7 @@ def get_otp(request):
                 filepath = default_storage.save('tmp_'+str(img_src),ContentFile(img_src.read()))
                 filepath = os.path.join(settings.MEDIA_ROOT, filepath)
                 # orig_name = img_src.field.upload_to
-                print(filepath)
+                # print(filepath)
                 # os.path.join(settings.MEDIA_ROOT, orig_name)
                 # original_file = Path(settings.MEDIA_ROOT).joinpath(orig_name)
                 # print(original_file)
@@ -165,6 +165,7 @@ def get_otp(request):
                 data_in_image =detect_text(filepath , form.cleaned_data['ID_NUMBER'],form.cleaned_data['FIRST_NAME'], form.cleaned_data['LAST_NAME'])
                 # print(form.cleaned_data['ID_NUMBER'] in j)
                 if data_in_image:
+                    os.remove(filepath)
                     form.save()
                     messages.success(request,"Your Data is saved. Zain will verify it in 2 Working Days")
                     form = MSISDNForm()
