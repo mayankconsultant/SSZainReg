@@ -82,3 +82,53 @@ def extract_text(filepath, id_num,first_name,last_name):
         return True
     else :
         return False
+
+
+
+def detect_text(path, id,first_name,last_name):
+    """Detects text in the file."""
+    from google.cloud import vision
+    from django.conf import settings
+    import io
+    client = vision.ImageAnnotatorClient()
+
+    credential_path = os.path.join( settings.BASE_DIR,'focus-cumulus-303208-239d353965a2.json')
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
+
+    with io.open(path, 'rb') as image_file:
+        content = image_file.read()
+
+    image = vision.Image(content=content)
+
+    response = client.text_detection(image=image)
+    texts = response.text_annotations
+    print('Texts:')
+
+    points = 0
+    for text in texts:
+        #     print('\n"{}"'.format(text.description))
+
+        # for t in text.split('<'):
+        # print(str(id) + ' Matched with ' + str(text.description).strip()   )
+        # print ('result' + str ( str(id) in str(text.description).strip()  ) )
+        if str(id) in str(text.description).strip():
+              points += 1
+              print(str(id) + ' Matched with ' + str(text.description).strip())
+        if first_name in text.description:
+              points += 1
+              print(str(first_name) + ' Matched with ' + str(text.description).strip())
+        if last_name in text.description:
+              points += 1
+              print(str(last_name) + ' Matched with ' + str(text.description).strip())
+            # print(k)
+    # print( data in k)
+    # print(k)
+    # print(data in k)
+    # k= k.split('\n')
+    # for j in k:
+    # print( str(j) + ' Matched with ' + str(k))
+    #     print(j in str(k))
+    if points >= 2:
+        return True
+
+    return False

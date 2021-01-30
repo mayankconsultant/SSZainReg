@@ -14,7 +14,7 @@ from .models import CUSTOMER ,  payam, county,states
 
 from .forms import MSISDNForm , OTPFORM , CustomerForm
 
-from .utils import  send_message, extract_text
+from .utils import  send_message, extract_text, detect_text
 
 from django.conf import settings
 from pathlib import Path
@@ -159,10 +159,12 @@ def get_otp(request):
                 # original_file = Path(settings.MEDIA_ROOT).joinpath(orig_name)
                 # print(original_file)
                 # j='popop'
-                found= extract_text(filepath, form.cleaned_data['ID_NUMBER'],form.cleaned_data['FIRST_NAME'], form.cleaned_data['LAST_NAME'])
+                #  #found= extract_text(filepath, form.cleaned_data['ID_NUMBER'],form.cleaned_data['FIRST_NAME'], form.cleaned_data['LAST_NAME'])
                 # print(j)
+                data_in_image=False
+                data_in_image =detect_text(filepath , form.cleaned_data['ID_NUMBER'],form.cleaned_data['FIRST_NAME'], form.cleaned_data['LAST_NAME'])
                 # print(form.cleaned_data['ID_NUMBER'] in j)
-                if found:
+                if data_in_image:
                     form.save()
                     messages.success(request,"Your Data is saved. Zain will verify it in 2 Working Days")
                     form = MSISDNForm()
@@ -246,3 +248,5 @@ def check_pic(request):
    #     k='True'
 
    return render(request,'register/home.html',{'data':k,'pic':img_src})
+
+

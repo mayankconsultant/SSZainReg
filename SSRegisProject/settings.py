@@ -172,3 +172,5 @@ SHELL_PLUS_PRINT_SQL = True
 #django_countries
 
 COUNTRIES_FIRST=['SS','SD','IN','CN','US']
+
+
