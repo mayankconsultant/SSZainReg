@@ -27,22 +27,24 @@
               <table class="table table-bordered hover cell-border " id="userDetailTable"  >
                 <thead class="thead-dark bg-info">
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Mobile No</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">ID TYPE</th>
-                  <th scope="col">ID Number</th>
-                  <th scope="col">Gender</th>
-                  <th scope="col">Date OF Birth</th>
-                  <th scope="col">Actions</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Country</th>
-                  <th scope="col">City</th>
-                  <th scope="col">State</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Mobile No</th>
+                    <th scope="col"> Registered On</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">ID TYPE</th>
+                    <th scope="col">ID Number</th>
+
+                    <th scope="col">Date OF Birth</th>
+                    <th scope="col">Actions</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
                   <th scope="col">County</th>
                   <th scope="col">PAYAM</th>
                   <th scope="col">BOMA</th>
+                    <th scope="col">Gender</th>
                    <th scope="col">ID_PROOF</th>
                   <!-- <th scope="col">Joined On</th> -->
                   <!-- <th scope="col">Department</th> -->
@@ -51,28 +53,30 @@
               <tbody>
                 {% for d in data %}
                 <tr>
-                  <td>{{forloop.counter}}</td>
-                  <td>{{d.MOBILE_NUMBER}}</td>
-                  <td>{{d.FIRST_NAME}}</td>
-                  <td>{{d.LAST_NAME}}</td>
-                  <td>{{d.ID_TYPE}}</td>
-                  <td>{{d.ID_NUMBER}}</td>
-                   <td>{{d.gender}}</td>
-                   <td>{{d.DOB}}</td>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{d.MOBILE_NUMBER}}</td>
+                    <td> {{d.CREATED_DATE | date:"d-M-Y"}}</td>
+                    <td>{{d.FIRST_NAME}}</td>
+                    <td>{{d.LAST_NAME}}</td>
+                    <td>{{d.ID_TYPE}}</td>
+                    <td>{{d.ID_NUMBER}}</td>
+                    <td>{{d.DOB}}</td>
                     <td class="block" style="width:100%">
-                      <a class="text-success" role="button" href="#">Accept</a> |
-                      <a class="text-info" role="button" href="#">Reject</a> |
-                      <a class="text-danger" role="button" href="#">Delete</a>
-                   </td>
-                   <td>{{d.ADDRESS}}</td>
+                        <a class="text-success" role="button" href="#">Accept</a> |
+                        <a class="text-info" role="button" href="#">Reject</a> |
+                        <a class="text-danger" role="button" href="#">Delete</a>
+                    </td>
+                    <td>{{d.ADDRESS}}</td>
                    <td>{{d.COUNTRY.name}}</td>
                    <td>{{d.CITY}}</td>
                    <td>{{d.STATE}}</td>
                    <td>{{d.COUNTY}}</td>
                    <td>{{d.PAYAM}}</td>
                    <td>{{d.BOMA}}</td>
+                    <td>{{d.gender}}</td>
 
                    <td> <img src={{d.ID_PROOF.url}} alt=""> </td>
+
 
                 </tr>
                 {% endfor %}

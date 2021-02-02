@@ -1,35 +1,24 @@
-from django import forms
-from django.shortcuts import render, redirect, HttpResponse
-from django.urls import reverse_lazy
-
-from django.contrib import messages
-
-
-
-from django.contrib.messages.views import SuccessMessageMixin
-
-# Create your views here.
-from django.views.generic import ListView, CreateView , FormView, View
-from .models import CUSTOMER ,  payam, county,states
-
-from .forms import MSISDNForm , OTPFORM , CustomerForm
-
-from .utils import  send_message, extract_text, detect_text
-
-from django.conf import settings
+import os
 from pathlib import Path
 
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import render, redirect
+# Create your views here.
+from django.views.generic import ListView, CreateView
 
-from PIL import Image , ImageFilter
-import pytesseract
-import os
+from .forms import MSISDNForm, OTPFORM, CustomerForm
+from .models import CUSTOMER, payam, county
+from .utils import send_message, extract_text, detect_text
+
 
 class list(ListView):
     model = CUSTOMER
     template_name = "list.html"
-    queryset = CUSTOMER.objects.all()
+    # queryset = CUSTOMER.objects.all()
     context_object_name = "data"
-    fields = "__all__"
+    # fields = "__all__"
 
     # def get_context_data(self, **kwargs):
     #     context = super(list, self).get_context_data(**kwargs)
@@ -165,6 +154,7 @@ def get_otp(request):
                 data_in_image =detect_text(filepath , form.cleaned_data['ID_NUMBER'],form.cleaned_data['FIRST_NAME'], form.cleaned_data['LAST_NAME'])
                 # print(form.cleaned_data['ID_NUMBER'] in j)
                 if data_in_image:
+                    print('Data in image ' + str(data_in_image))
                     os.remove(filepath)
                     form.save()
                     messages.success(request,"Your Data is saved. Zain will verify it in 2 Working Days")

@@ -1,6 +1,3 @@
-
-import requests
-
 def gen_otp(len):
     import math , random
 
@@ -24,21 +21,20 @@ def send_message(msisdn):
     Api = Api + '&MobileNumbers=' + str(msisdn)[3:]
     Api = Api + '&ApiKey=TqEuq9o58233RcYkFIm5w1CS2HB7yJHejc0a3tbMpfg%3D&ClientId=94393ba7-afef-4744-880b-175368936e9b'
 
-
     # r = requests.get(url=Api)
     # print(Api)
     # print (r.status_code)
     return otp
 
 
-# from pytesseract import image_to_string
-from PIL import Image , ImageFilter
-import pytesseract
 import os
 
-import  re
+import pytesseract
+# from pytesseract import image_to_string
+from PIL import Image, ImageFilter
 
-def extract_text(filepath, id_num,first_name,last_name):
+
+def extract_text(filepath, id_num, first_name, last_name):
     img_grey = Image.open(filepath)
     img_grey = img_grey.convert('L')
     img_grey.save('media\ALL\grey_' + os.path.basename(filepath))
@@ -91,6 +87,7 @@ def detect_text(path, id,first_name,last_name):
     from django.conf import settings
     import io
     client = vision.ImageAnnotatorClient()
+    # cl = vision.ImageAnnotatorClient().from_service_account_json('')
 
     credential_path = os.path.join( settings.BASE_DIR,'focus-cumulus-303208-239d353965a2.json')
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
@@ -105,30 +102,31 @@ def detect_text(path, id,first_name,last_name):
     print('Texts:')
 
     points = 0
-    for text in texts:
-        #     print('\n"{}"'.format(text.description))
+    for i, text in enumerate(texts):
+        if i > 0:
+            # print (str(i) +" --> " +  str(text.description).strip('\n') )
+            if id == str(text.description).strip('\n').strip('<'):
+                points = points + 1
+                print(str(id) + ' Matched with ' + str(text.description).strip('\n'))
+            if first_name == str(text.description).strip('\n'):
+                points = points + 1
+                print(str(first_name) + ' Matched with ' + str(text.description).strip('\n'))
+            if last_name == str(text.description).strip('\n'):
+                points += points + 1
+                print(str(last_name) + ' Matched with ' + str(text.description).strip('\n'))
 
-        # for t in text.split('<'):
-        # print(str(id) + ' Matched with ' + str(text.description).strip()   )
-        # print ('result' + str ( str(id) in str(text.description).strip()  ) )
-        if str(id) in str(text.description).strip():
-              points += 1
-              print(str(id) + ' Matched with ' + str(text.description).strip())
-        if first_name in text.description:
-              points += 1
-              print(str(first_name) + ' Matched with ' + str(text.description).strip())
-        if last_name in text.description:
-              points += 1
-              print(str(last_name) + ' Matched with ' + str(text.description).strip())
-            # print(k)
-    # print( data in k)
-    # print(k)
-    # print(data in k)
-    # k= k.split('\n')
-    # for j in k:
-    # print( str(j) + ' Matched with ' + str(k))
-    #     print(j in str(k))
-    if points >= 2:
+    # print('Points ' + str(points))
+    if (points >= 2):
+        # print( 'Points ' + str(points) )
         return True
+    else:
+        return False
 
-    return False
+
+def googlestorage():
+    from google.cloud import storage
+    storage_client = storage.Client.from_service_account_json()
+
+    pass
+
+#     Bucket

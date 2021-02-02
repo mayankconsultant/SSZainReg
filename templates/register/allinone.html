@@ -4,46 +4,7 @@
 
 {% block  header %}
 
-<style>
-.container2 {
-  margin-top: 50px;
-}
-.radio {
-  /* margin: transform(-50%, -50%); */
-  margin: 5%;
-  justify-content: space-between;
-  align-content: center;
-  display: inline-flex;
-  padding: 50px;
-  overflow: hidden;
-  list-style: none;
-  width: 80%;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-  /* border: 5px solid darkgreen; */
-}
-.radio_input {
-  display: None;
-}
-#id_gender* {
-  border: 5px solid darkgreen;
-  border-radius: 15px;
-  color: #009578;
-  cursor: pointer;
-  font-family: "Dancing Script";
-  padding: 8px 14px;
-  font-size: 20px;
-  width: 30%;
-  text-align: center;
-  justify-content: space-between;
-  transition: background 0.5s;
-}
-.radio_input:checked + .label1 {
-  background-color: rgb(130, 172, 152);
-}
 
-
-</style> 
 
 {% endblock header %}
 
@@ -74,16 +35,24 @@
 <!--  <input type="submit" value="Save">-->
 
 
-
-
 </form>
+ </div>
 </div>
 </div>
-</div>
-  {% endblock content %}
+{% endblock content %}
 
 
-  {% block endjava   %}
+{% block endjava   %}
+
+<script>
+    setTimeout(function(){
+      if ($('.alert').length > 0) {
+        $('.alert').remove();
+      }
+    }, 3000)
+
+</script>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 
